@@ -1,1 +1,483 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plano de Aceleração: Home Studio Campo Grande</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #1e293b; }
+        .chart-container { position: relative; width: 100%; max-width: 600px; margin: 0 auto; height: 300px; max-height: 400px; }
+        @media (min-width: 768px) { .chart-container { height: 350px; } }
+        .card-shadow { box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); }
+        .accent-border { border-left: 4px solid #6366f1; }
+        .btn-interactive:active { transform: scale(0.98); }
+        .script-box { background-color: #f1f5f9; border-radius: 8px; padding: 16px; border: 1px dashed #cbd5e1; }
+    </style>
+    <!-- Chosen Palette: Slate (Neutrals) + Indigo (Professional Accent) + Emerald (Success) -->
+    <!-- Application Structure Plan: 
+         1. Hero Section: Immediate view of the Goal (20 leads) vs Reality.
+         2. Funnel Diagnosis: Chart visualizing the 14 leads -> 1 sale drop-off to emphasize the conversion problem.
+         3. Creative Audit: Interactive checklist to verify ad quality beyond aesthetics.
+         4. Conversion Engine: Interactive Script Manager for WhatsApp (Crucial for local service sales).
+         5. Local Strategy: Cards with specific Campo Grande tactics.
+         6. Projection Calculator: Interactive inputs to simulate revenue based on conversion improvements.
+    -->
+    <!-- Visualization & Content Choices:
+         - Funnel Chart (Bar): To clearly show the drop-off rate. Goal: Inform/Shock.
+         - Projection Chart (Line): To show potential growth. Goal: Motivate.
+         - Interactive Checklists & Scripts: To turn the report into a tool. Goal: Action.
+         - NO SVG/Mermaid used. Pure HTML/Tailwind/Canvas.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+</head>
+<body class="bg-slate-50 text-slate-800">
 
+    <!-- Navigation / Header -->
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <span class="text-2xl font-bold text-indigo-700 tracking-tight">Studio<span class="text-slate-900">Manager</span></span>
+                    <span class="ml-4 px-2 py-1 text-xs font-semibold bg-indigo-100 text-indigo-800 rounded-full hidden sm:inline-block">Foco: Campo Grande, RJ</span>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button onclick="scrollToSection('diagnosis')" class="text-sm font-medium text-slate-600 hover:text-indigo-600 transition">Diagnóstico</button>
+                    <button onclick="scrollToSection('scripts')" class="text-sm font-medium text-slate-600 hover:text-indigo-600 transition">Scripts de Venda</button>
+                    <button onclick="scrollToSection('strategy')" class="text-sm font-medium text-slate-600 hover:text-indigo-600 transition">Estratégia Local</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+
+        <!-- Section 1: Executive Summary & Context -->
+        <section class="text-center max-w-4xl mx-auto mb-12">
+            <h1 class="text-4xl font-extrabold text-slate-900 mb-4">Plano de Conversão & Tráfego</h1>
+            <p class="text-lg text-slate-600 leading-relaxed">
+                Você tem um Home Studio em Campo Grande (Rap/Trap/Funk). O tráfego está trazendo pessoas (14 leads), mas o dinheiro não está entrando na mesma proporção (1 fechamento).
+                Este painel foi desenhado para identificar onde o cliente está "escorregando" e te dar as ferramentas para fechar mais gravações.
+            </p>
+            <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-white p-6 rounded-xl card-shadow accent-border">
+                    <p class="text-sm text-slate-500 font-medium uppercase">Leads Atuais</p>
+                    <p class="text-3xl font-bold text-slate-900">14</p>
+                    <p class="text-xs text-green-600 mt-1">Tráfego Rodando</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl card-shadow border-l-4 border-red-500">
+                    <p class="text-sm text-slate-500 font-medium uppercase">Taxa de Conversão</p>
+                    <p class="text-3xl font-bold text-red-600">~7.1%</p>
+                    <p class="text-xs text-slate-400 mt-1">Meta Ideal: 20%+</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl card-shadow border-l-4 border-indigo-500">
+                    <p class="text-sm text-slate-500 font-medium uppercase">Meta de Leads</p>
+                    <p class="text-3xl font-bold text-indigo-600">20</p>
+                    <p class="text-xs text-slate-400 mt-1">Próximo Passo</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Diagnosis (Funnel Visualization) -->
+        <section id="diagnosis" class="scroll-mt-20">
+            <div class="flex flex-col md:flex-row gap-8 items-start">
+                <div class="w-full md:w-1/3">
+                    <h2 class="text-2xl font-bold text-slate-900 mb-4">O "Buraco" no Funil</h2>
+                    <p class="text-slate-600 mb-4 text-sm">
+                        Visualizar seus dados mostra claramente o problema. Você tem atração (anúncios funcionando), mas perde força no fechamento.
+                    </p>
+                    <div class="bg-amber-50 border border-amber-200 rounded-lg p-4 text-sm text-amber-800">
+                        <strong>Insight do Especialista:</strong>
+                        <br>Se o criativo é "muito bom" mas a conversão é baixa, geralmente o problema é:
+                        <ul class="list-disc ml-4 mt-2 space-y-1">
+                            <li>O público é "curioso" (sem dinheiro).</li>
+                            <li>A demora no atendimento no WhatsApp.</li>
+                            <li>Falta de ancoragem de valor antes do preço.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="w-full md:w-2/3 bg-white p-6 rounded-xl card-shadow">
+                    <h3 class="text-lg font-semibold mb-4 text-slate-700">Funil de Vendas Atual vs. Meta</h3>
+                    <div class="chart-container">
+                        <canvas id="funnelChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Creative Audit (Interactive) -->
+        <section class="bg-white rounded-xl card-shadow overflow-hidden">
+            <div class="p-6 md:p-8 bg-slate-900 text-white">
+                <h2 class="text-2xl font-bold">Auditoria de Criativo (Rap/Trap/Funk)</h2>
+                <p class="text-slate-300 mt-2">Você disse que seu criativo é bom. Vamos testar se ele é bom para <strong>vender</strong> ou só para ganhar like.</p>
+            </div>
+            <div class="p-6 md:p-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                    <p class="font-semibold text-slate-700 mb-4">Marque o que seu anúncio ATUAL tem:</p>
+                    <div class="space-y-3" id="auditChecklist">
+                        <label class="flex items-center space-x-3 cursor-pointer p-2 hover:bg-slate-50 rounded">
+                            <input type="checkbox" class="w-5 h-5 text-indigo-600 rounded focus:ring-indigo-500 audit-check" value="10">
+                            <span class="text-slate-700">Mostra o equipamento/qualidade do áudio (Prova Visual)?</span>
+                        </label>
+                        <label class="flex items-center space-x-3 cursor-pointer p-2 hover:bg-slate-50 rounded">
+                            <input type="checkbox" class="w-5 h-5 text-indigo-600 rounded focus:ring-indigo-500 audit-check" value="20">
+                            <span class="text-slate-700">Tem uma "Oferta Irresistível" clara? (Ex: "Mix inclusa", "Beat promocional")</span>
+                        </label>
+                        <label class="flex items-center space-x-3 cursor-pointer p-2 hover:bg-slate-50 rounded">
+                            <input type="checkbox" class="w-5 h-5 text-indigo-600 rounded focus:ring-indigo-500 audit-check" value="20">
+                            <span class="text-slate-700">Call to Action (Chamada) específica para Campo Grande/RJ?</span>
+                        </label>
+                        <label class="flex items-center space-x-3 cursor-pointer p-2 hover:bg-slate-50 rounded">
+                            <input type="checkbox" class="w-5 h-5 text-indigo-600 rounded focus:ring-indigo-500 audit-check" value="20">
+                            <span class="text-slate-700">Filtra curiosos? (Ex: Menciona "Sessões a partir de...")</span>
+                        </label>
+                        <label class="flex items-center space-x-3 cursor-pointer p-2 hover:bg-slate-50 rounded">
+                            <input type="checkbox" class="w-5 h-5 text-indigo-600 rounded focus:ring-indigo-500 audit-check" value="30">
+                            <span class="text-slate-700">Mostra um MC local gravando e curtindo o resultado (Prova Social)?</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="flex flex-col justify-center items-center bg-slate-50 rounded-xl p-6 border border-slate-200">
+                    <h4 class="text-lg font-bold text-slate-500 uppercase tracking-wide">Nota de Conversão</h4>
+                    <div class="text-6xl font-extrabold text-indigo-600 mt-2 mb-2"><span id="auditScore">0</span>%</div>
+                    <p id="auditFeedback" class="text-center text-sm text-slate-600 px-4">Marque as opções ao lado para avaliar seu anúncio.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Conversion Engine (Scripts) -->
+        <section id="scripts" class="scroll-mt-20">
+            <div class="mb-6">
+                <h2 class="text-2xl font-bold text-slate-900">A Máquina de Conversão (WhatsApp)</h2>
+                <p class="text-slate-600 max-w-3xl">
+                    A maioria dos leads de música para em "Quanto custa?". Aqui estão scripts validados para transformar curiosos do Instagram em clientes pagantes.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Navigation for Scripts -->
+                <div class="lg:col-span-1 space-y-2">
+                    <button onclick="showScript('intro')" class="script-nav-btn w-full text-left px-4 py-3 rounded-lg font-medium bg-indigo-50 text-indigo-700 border border-indigo-200 hover:bg-indigo-100 transition">
+                        1. A Primeira Resposta
+                    </button>
+                    <button onclick="showScript('price')" class="script-nav-btn w-full text-left px-4 py-3 rounded-lg font-medium bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 transition">
+                        2. Revelando o Preço (Ancoragem)
+                    </button>
+                    <button onclick="showScript('objection')" class="script-nav-btn w-full text-left px-4 py-3 rounded-lg font-medium bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 transition">
+                        3. "Tá caro" / "Vou ver"
+                    </button>
+                    <button onclick="showScript('followup')" class="script-nav-btn w-full text-left px-4 py-3 rounded-lg font-medium bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 transition">
+                        4. Recuperação (O Sumido)
+                    </button>
+                </div>
+
+                <!-- Script Display Area -->
+                <div class="lg:col-span-2 bg-white p-6 rounded-xl card-shadow border border-slate-100 relative min-h-[300px]">
+                    
+                    <!-- Script: Intro -->
+                    <div id="script-intro" class="script-content block">
+                        <h3 class="text-lg font-bold text-slate-800 mb-2">Quando o lead manda "Preço?" ou "Como funciona?"</h3>
+                        <p class="text-sm text-slate-500 mb-4 italic">Objetivo: Quebrar o padrão e não ser apenas um cardápio de preços. Mostrar interesse no projeto.</p>
+                        <div class="script-box">
+                            <p class="text-slate-800 font-mono text-sm leading-relaxed">
+                                "Salve mano! Satisfação 👊 Aqui é o [Seu Nome] do estúdio.<br><br>
+                                Cara, pra eu te passar o orçamento certinho, me diz uma coisa: você já tem o beat ou precisa produzir do zero? É Trap, Funk ou Rap?<br><br>
+                                (Quero entender tua ideia pra gente fazer um som de qualidade máxima)"
+                            </p>
+                        </div>
+                        <button onclick="copyScript('script-intro')" class="mt-4 text-xs font-bold text-indigo-600 hover:text-indigo-800 flex items-center">
+                            <span class="mr-1">📋</span> Copiar Texto
+                        </button>
+                    </div>
+
+                    <!-- Script: Price -->
+                    <div id="script-price" class="script-content hidden">
+                        <h3 class="text-lg font-bold text-slate-800 mb-2">Apresentando o Valor (Antes do Preço)</h3>
+                        <p class="text-sm text-slate-500 mb-4 italic">Nunca dê o preço seco. Mostre o que está incluso (Mix, Master, Direção).</p>
+                        <div class="script-box">
+                            <p class="text-slate-800 font-mono text-sm leading-relaxed">
+                                "Pode crer, irado. Mano, aqui a gente não só aperta 'rec', a gente produz a parada junto.<br><br>
+                                O pacote inclui:<br>
+                                ✅ Gravação com Microfone [Seu Mic]<br>
+                                ✅ Tratamento de voz profissional (Auto-tune, EQ)<br>
+                                ✅ Mixagem e Masterização completa<br>
+                                <br>
+                                O investimento pra sair com o som pronto pro Spotify é de apenas R$ [Valor] por hora/faixa. Se fechar essa semana, consigo liberar [Bônus: ex: prévia no mesmo dia].<br><br>
+                                Bora agendar? Tenho horário na quinta às 14h."
+                            </p>
+                        </div>
+                         <button onclick="copyScript('script-price')" class="mt-4 text-xs font-bold text-indigo-600 hover:text-indigo-800 flex items-center">
+                            <span class="mr-1">📋</span> Copiar Texto
+                        </button>
+                    </div>
+
+                    <!-- Script: Objection -->
+                    <div id="script-objection" class="script-content hidden">
+                        <h3 class="text-lg font-bold text-slate-800 mb-2">Matando a Objeção "Tá Caro"</h3>
+                        <p class="text-sm text-slate-500 mb-4 italic">Não baixe o preço imediatamente. Compare com o custo de não ter qualidade.</p>
+                        <div class="script-box">
+                            <p class="text-slate-800 font-mono text-sm leading-relaxed">
+                                "Entendo mano. Mas pensa comigo: quanto custa lançar um som com áudio ruim e ninguém ouvir?<br><br>
+                                O que eu tô te oferecendo é qualidade de estúdio profissional pra tua música bater de frente com os caras grandes.<br><br>
+                                Mas ó, pra te fortalecer, se você trouxer um amigo pra gravar junto no mesmo dia, consigo fazer [X%] de desconto pra cada um. O que acha?"
+                            </p>
+                        </div>
+                         <button onclick="copyScript('script-objection')" class="mt-4 text-xs font-bold text-indigo-600 hover:text-indigo-800 flex items-center">
+                            <span class="mr-1">📋</span> Copiar Texto
+                        </button>
+                    </div>
+
+                    <!-- Script: Followup -->
+                    <div id="script-followup" class="script-content hidden">
+                        <h3 class="text-lg font-bold text-slate-800 mb-2">Resgatando o Lead Sumido</h3>
+                        <p class="text-sm text-slate-500 mb-4 italic">Use escassez real.</p>
+                        <div class="script-box">
+                            <p class="text-slate-800 font-mono text-sm leading-relaxed">
+                                "E aí mano, tranquilo?<br><br>
+                                Tô fechando a agenda da semana aqui e sobrou um horário na [Dia] à tarde. Como você tinha demonstrado interesse, segurei pra te perguntar antes de liberar no Insta.<br><br>
+                                Vamos pra cima desse som ou deixamos pra próxima?"
+                            </p>
+                        </div>
+                         <button onclick="copyScript('script-followup')" class="mt-4 text-xs font-bold text-indigo-600 hover:text-indigo-800 flex items-center">
+                            <span class="mr-1">📋</span> Copiar Texto
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Local Strategy Strategy -->
+        <section id="strategy" class="bg-white p-6 md:p-8 rounded-xl card-shadow">
+            <h2 class="text-2xl font-bold text-slate-900 mb-6">Táticas de Guerrilha: Campo Grande</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <!-- Tactic 1 -->
+                <div class="border border-slate-200 rounded-lg p-5 hover:border-indigo-400 transition cursor-default">
+                    <div class="w-10 h-10 bg-indigo-100 rounded-full flex items-center justify-center text-indigo-600 mb-3 text-xl">📍</div>
+                    <h3 class="font-bold text-slate-800">Geolocalização Hiper-Focada</h3>
+                    <p class="text-sm text-slate-600 mt-2">
+                        Não anuncie para "Rio de Janeiro". Anuncie colocando o pino em cima de Campo Grande + 5km.
+                        <strong>Público:</strong> Interesses em "Batalha da Aldeia", "Pineapple Storm", "Trap Brasileiro". Idade: 16-24 anos.
+                    </p>
+                </div>
+
+                <!-- Tactic 2 -->
+                <div class="border border-slate-200 rounded-lg p-5 hover:border-indigo-400 transition cursor-default">
+                    <div class="w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center text-emerald-600 mb-3 text-xl">🤝</div>
+                    <h3 class="font-bold text-slate-800">Parceria com Barbearias</h3>
+                    <p class="text-sm text-slate-600 mt-2">
+                        Barbearias são o hub do público de Trap/Funk.
+                        Ofereça 1 hora de gravação grátis para ser sorteada no Insta da barbearia mais famosa do bairro. Em troca, você ganha os leads de todos que comentarem "Eu quero".
+                    </p>
+                </div>
+
+                <!-- Tactic 3 -->
+                <div class="border border-slate-200 rounded-lg p-5 hover:border-indigo-400 transition cursor-default">
+                    <div class="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center text-purple-600 mb-3 text-xl">🔥</div>
+                    <h3 class="font-bold text-slate-800">O Desafio do Beat</h3>
+                    <p class="text-sm text-slate-600 mt-2">
+                        Poste um reels com um beat seu tocando.
+                        "Quem mandar a melhor rima nesse beat ganha a produção completa".
+                        Custo: Seu tempo. Ganho: Dezenas de MCs engajando e entrando no seu funil.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 6: Future Projections Calculator -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold text-slate-900 mb-4">Simulador de Faturamento</h2>
+            <div class="bg-indigo-900 text-white rounded-xl p-6 md:p-8 card-shadow">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div class="space-y-6">
+                        <div>
+                            <label class="block text-sm font-medium text-indigo-200 mb-1">Ticket Médio (Sessão/Beat) R$</label>
+                            <input type="number" id="ticketInput" value="150" class="w-full p-2 rounded bg-indigo-800 border border-indigo-600 text-white focus:outline-none focus:ring-2 focus:ring-indigo-400">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-indigo-200 mb-1">Meta de Leads (Mensal)</label>
+                            <div class="flex items-center space-x-4">
+                                <input type="range" id="leadsRange" min="10" max="100" value="20" class="w-full h-2 bg-indigo-600 rounded-lg appearance-none cursor-pointer">
+                                <span class="font-bold text-xl w-12" id="leadsValue">20</span>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-indigo-200 mb-1">Taxa de Conversão Esperada (%)</label>
+                            <div class="flex items-center space-x-4">
+                                <input type="range" id="conversionRange" min="1" max="50" value="15" class="w-full h-2 bg-indigo-600 rounded-lg appearance-none cursor-pointer">
+                                <span class="font-bold text-xl w-12" id="conversionValue">15%</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center md:text-right">
+                        <p class="text-indigo-300 uppercase text-sm font-semibold tracking-wider">Projeção de Receita Mensal</p>
+                        <p class="text-5xl font-extrabold mt-2 text-white" id="revenueDisplay">R$ 450</p>
+                        <p class="text-sm text-indigo-300 mt-2">Novos Clientes Estimados: <span id="clientsDisplay" class="font-bold text-white">3</span></p>
+                        <div class="mt-6 pt-6 border-t border-indigo-700">
+                             <p class="text-xs text-indigo-300 italic">
+                                 "Com 20 leads e melhorando seu script para converter 15% (3 pessoas), você triplica seu resultado atual."
+                             </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-white border-t border-slate-200 py-8">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="text-slate-500 text-sm">&copy; 2024 Home Studio Manager Strategy. Foco local.</p>
+        </div>
+    </footer>
+
+    <!-- Logic Section -->
+    <script>
+        // --- Navigation Logic ---
+        function scrollToSection(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // --- Chart Logic ---
+        document.addEventListener('DOMContentLoaded', function() {
+            // Funnel Chart
+            const ctxFunnel = document.getElementById('funnelChart').getContext('2d');
+            new Chart(ctxFunnel, {
+                type: 'bar',
+                data: {
+                    labels: ['Impressões (Est.)', 'Cliques (Est.)', 'Leads (WhatsApp)', 'Vendas'],
+                    datasets: [{
+                        label: 'Funil Atual',
+                        data: [3000, 150, 14, 1],
+                        backgroundColor: [
+                            '#e2e8f0', // Impressions (Slate 200)
+                            '#94a3b8', // Clicks (Slate 400)
+                            '#6366f1', // Leads (Indigo 500)
+                            '#ef4444'  // Sales (Red 500) - Highlight the drop
+                        ],
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    if(context.raw === 1) return 'Apenas 1 Venda (7% Conv)';
+                                    return context.raw;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: { beginAtZero: true, grid: { display: false } },
+                        x: { grid: { display: false } }
+                    }
+                }
+            });
+        });
+
+        // --- Script Switcher Logic ---
+        function showScript(scriptId) {
+            // Hide all scripts
+            document.querySelectorAll('.script-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.script-content').forEach(el => el.classList.remove('block'));
+            
+            // Show selected script
+            const selected = document.getElementById('script-' + scriptId);
+            selected.classList.remove('hidden');
+            selected.classList.add('block');
+
+            // Update buttons styling
+            document.querySelectorAll('.script-nav-btn').forEach(btn => {
+                btn.classList.remove('bg-indigo-50', 'text-indigo-700', 'border-indigo-200');
+                btn.classList.add('bg-white', 'text-slate-600', 'border-slate-200');
+            });
+            
+            // Highlight active button (approximate match via event click would be cleaner, but simple loop works)
+            event.target.classList.remove('bg-white', 'text-slate-600', 'border-slate-200');
+            event.target.classList.add('bg-indigo-50', 'text-indigo-700', 'border-indigo-200');
+        }
+
+        // --- Copy Logic ---
+        function copyScript(elementId) {
+            const text = document.querySelector(`#${elementId} .script-box p`).innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Script copiado! Agora cole no WhatsApp.');
+            });
+        }
+
+        // --- Audit Checklist Logic ---
+        const checkboxes = document.querySelectorAll('.audit-check');
+        const scoreDisplay = document.getElementById('auditScore');
+        const feedbackDisplay = document.getElementById('auditFeedback');
+
+        checkboxes.forEach(chk => {
+            chk.addEventListener('change', updateAuditScore);
+        });
+
+        function updateAuditScore() {
+            let score = 0;
+            checkboxes.forEach(chk => {
+                if(chk.checked) score += parseInt(chk.value);
+            });
+            scoreDisplay.innerText = score;
+            
+            if(score < 40) {
+                scoreDisplay.parentElement.classList.add('text-red-600');
+                scoreDisplay.parentElement.classList.remove('text-indigo-600', 'text-emerald-600');
+                feedbackDisplay.innerText = "Cuidado: Seu anúncio pode estar bonito, mas não vende. Refaça a oferta.";
+            } else if (score < 80) {
+                scoreDisplay.parentElement.classList.add('text-indigo-600');
+                scoreDisplay.parentElement.classList.remove('text-red-600', 'text-emerald-600');
+                feedbackDisplay.innerText = "Bom caminho. Ajuste o Call to Action para melhorar.";
+            } else {
+                scoreDisplay.parentElement.classList.add('text-emerald-600');
+                scoreDisplay.parentElement.classList.remove('text-red-600', 'text-indigo-600');
+                feedbackDisplay.innerText = "Excelente! Seu anúncio está pronto para converter.";
+            }
+        }
+
+        // --- Calculator Logic ---
+        const ticketInput = document.getElementById('ticketInput');
+        const leadsRange = document.getElementById('leadsRange');
+        const conversionRange = document.getElementById('conversionRange');
+        
+        const leadsValue = document.getElementById('leadsValue');
+        const conversionValue = document.getElementById('conversionValue');
+        const revenueDisplay = document.getElementById('revenueDisplay');
+        const clientsDisplay = document.getElementById('clientsDisplay');
+
+        function updateCalculator() {
+            const ticket = parseFloat(ticketInput.value) || 0;
+            const leads = parseInt(leadsRange.value);
+            const conversion = parseInt(conversionRange.value);
+
+            leadsValue.innerText = leads;
+            conversionValue.innerText = conversion + '%';
+
+            const clients = Math.round(leads * (conversion / 100));
+            const revenue = clients * ticket;
+
+            clientsDisplay.innerText = clients;
+            revenueDisplay.innerText = 'R$ ' + revenue.toLocaleString('pt-BR');
+        }
+
+        [ticketInput, leadsRange, conversionRange].forEach(el => {
+            el.addEventListener('input', updateCalculator);
+        });
+        
+        // Init Calculator
+        updateCalculator();
+
+    </script>
+</body>
+</html>
